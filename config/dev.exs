@@ -24,8 +24,16 @@ config :phoenix_with_tailwindcss, PhoenixWithTailwindcssWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "24QcHVxU/+cVsI9+rrsi+8TasIdpG7kiWxOPbVA6K9dz+BzNSFQU2fJqV0c8g7/B",
   watchers: [
-    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    npm: [
+      "run",
+      "watch.js",
+      cd: Path.expand("../assets", __DIR__)
+    ],
+    npm: [
+      "run",
+      "watch.css",
+      cd: Path.expand("../assets", __DIR__)
+    ]
   ]
 
 # ## SSL Support
@@ -55,6 +63,7 @@ config :phoenix_with_tailwindcss, PhoenixWithTailwindcssWeb.Endpoint,
 # Watch static and templates for browser reloading.
 config :phoenix_with_tailwindcss, PhoenixWithTailwindcssWeb.Endpoint,
   live_reload: [
+    iframe_attrs: [class: "hidden"],
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
